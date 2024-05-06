@@ -15,6 +15,7 @@ public class UserInterface {
         readPoints();
         System.out.println("");
         printGradeDistribution();
+        printAverages();
     }
 
     public void readPoints() {
@@ -39,14 +40,14 @@ public class UserInterface {
     public void printGradeDistribution() {
         int grade = 5;
         while (grade >= 0) {
-            int stars = register.numberOfGrades(grade);
+            int stars = this.register.numberOfGrades(grade);
             System.out.print(grade + ": ");
             printsStars(stars);
             System.out.println("");
 
-            grade = grade - 1;
+            grade--;
         }
-        
+
     }
 
     public static void printsStars(int stars) {
@@ -54,5 +55,9 @@ public class UserInterface {
             System.out.print("*");
             stars--;
         }
+    }
+    public void printAverages(){
+        System.out.println("The average of points: " + this.register.averageOfPoints());
+        System.out.println("The average of grades: " + this.register.averageOfGrades());
     }
 }
