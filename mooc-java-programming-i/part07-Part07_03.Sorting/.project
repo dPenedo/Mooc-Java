@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Part06_10.TodoList</name>
+	<name>Part07_03.Sorting</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -22,7 +22,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1714760688099</id>
+			<id>1715199977089</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
