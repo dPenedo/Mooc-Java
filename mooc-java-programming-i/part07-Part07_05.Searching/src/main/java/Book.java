@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Book {
 
@@ -20,6 +21,18 @@ public class Book {
     @Override
     public String toString() {
         return "(id: " + id + "; name: " + name + ")";
+    }
+
+    public static int linearSearch(ArrayList<Book> books, int searchedId) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getId() == searchedId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static int binarySearch(ArrayList<Book> books, int searchedId){
+        return -1;
     }
 
 }

@@ -3,13 +3,24 @@ public class MainProgram {
 
     public static void main(String[] args) {
         // write your test code here
-        int[] array = { 3, -5, 6, -19, 7, 1, 3, 7, 5 };
-
-        int[] numbers = { 6, 3, 0, -1, 4 };
-        System.out.println("Index of the smallest number: of 3, -5, 6, -19, 7, 1, 3, 7, 5  \n"
-                + MainProgram.indexOfSmallest(array));
-        System.out
-                .println("Index of the smallest number: of  6, 3, 0, -1, 4 \n" + MainProgram.indexOfSmallest(numbers));
+        // int[] array = { 3, -5, 6, -19, 7, 1, 3, 7, 5 };
+        //
+        // int[] numbers = { 6, 3, 0, -1, 4 };
+        // System.out.println("Index of the smallest number: of 3, -5, 6, -19, 7, 1, 3,
+        // 7, 5 \n"
+        // + MainProgram.indexOfSmallest(array));
+        // System.out
+        // .println("Index of the smallest number: of 6, 3, 0, -1, 4 \n" +
+        // MainProgram.indexOfSmallest(numbers));
+        int[] numbers = { 8, 3, 7, 9, 1, 2, 4 };
+        for (int i : numbers) {
+            System.out.print(i);
+        }
+        System.out.println("\n=============");
+        MainProgram.sort(numbers);
+        for (int i : numbers) {
+            System.out.print(i);
+        }
     }
 
     public static int smallest(int[] array) {
@@ -61,11 +72,9 @@ public class MainProgram {
         array[index2] = index1Number;
     }
 
-    //TODO: falta el método sort!
     public static void sort(int[] array) {
         for (int i = 0; i < array.length; i++) {
-            if (i == indexOfSmallest(array)) {
-            }
+            swap(array, i, indexOfSmallestFrom(array, i));
         }
     }
 
