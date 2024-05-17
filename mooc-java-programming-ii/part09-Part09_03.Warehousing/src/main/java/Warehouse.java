@@ -18,6 +18,9 @@ public class Warehouse {
     public double getBalance() {
         return this.balance;
     }
+    public void setBalance(double balance){
+        this.balance = balance;
+    }
 
     public double getCapacity() {
         return this.capacity;
