@@ -28,11 +28,9 @@ public class Store {
 
             if (warehouse.products().contains(product)) {
                 warehouse.take(product);
+                cart.add(product, warehouse.price(product));
 
             }
-            //TODO:checks if the product requested by the customer is available and has stock in the warehouse.
-            //If so, reduce the products stock in the warehouse and add the product to the shopping cart.
-
              // Add code here that adds the product to the cart,
             // If there is any in the warehouse, and reduces the stock in the warehouse
             // Don't touch any of the other code!
