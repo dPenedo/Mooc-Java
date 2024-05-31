@@ -21,21 +21,23 @@ public class Hold {
     }
 
     public int totalWeight() {
-        int summa = 0;
-        int indeksi = 0;
-        while (indeksi < this.suitcases.size()) {
-        summa += this.suitcases.get(indeksi).totalWeight();
-        indeksi++;
-        }
+        // int summa = 0;
+        int summa = suitcases.stream()
+            .mapToInt(suitcase -> suitcase.totalWeight())
+            .sum();
         return summa;
     }
 
+    // WARN: Algo debe faltar
+
+// Failed: C_HoldTest printItemsOutputTest
+//         AssertionFailedError: Make sure that the printItems() method prints the contents of each suitcase in a hold
+//
+// Test results: 30/31 tests passed
+
     public void printItems() {
-        int indeksi = 0;
-        while (indeksi < this.suitcases.size()) {
-        this.suitcases.get(indeksi).printItems();
-        indeksi++;
-        }
+        suitcases.stream()
+            .forEach(suitcase -> suitcase.printItems());
     }
 
     @Override
