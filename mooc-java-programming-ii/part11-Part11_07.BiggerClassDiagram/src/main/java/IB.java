@@ -1,0 +1,7 @@
+/**
+ * IB
+ */
+public interface IB {
+
+
+}

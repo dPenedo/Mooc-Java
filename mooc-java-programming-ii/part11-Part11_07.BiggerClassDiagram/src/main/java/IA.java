@@ -1,0 +1,7 @@
+/**
+ * IA
+ */
+public interface IA {
+
+
+}

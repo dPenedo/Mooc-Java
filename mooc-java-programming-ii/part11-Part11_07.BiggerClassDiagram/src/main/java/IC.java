@@ -1,0 +1,7 @@
+/**
+ * IC
+ */
+public interface IC {
+
+
+}
