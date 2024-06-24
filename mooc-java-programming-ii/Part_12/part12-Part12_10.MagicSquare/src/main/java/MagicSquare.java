@@ -35,8 +35,6 @@ public class MagicSquare {
 			sumsOfColumns.add(0);
 		}
 
-
-
 		for (int row = 0; row < square.length; row++) {
 			for (int col = 0; col < square[row].length; col++) {
 				if (sumsOfColumns.get(col) == null) {
@@ -57,7 +55,7 @@ public class MagicSquare {
 
 		for (int row = 0; row < square.length; row++) {
 			sumsOfDiagonals.set(0, sumsOfDiagonals.get(0) + square[row][row]);
-			sumsOfDiagonals.set(1, sumsOfDiagonals.get(1) + square[row][square.length -1 - row]);
+			sumsOfDiagonals.set(1, sumsOfDiagonals.get(1) + square[row][square.length - 1 - row]);
 		}
 		return sumsOfDiagonals;
 	}
@@ -148,3 +146,5 @@ public class MagicSquare {
 		return result.toString();
 	}
 }
+
+
