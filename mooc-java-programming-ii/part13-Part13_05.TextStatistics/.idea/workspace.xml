@@ -10,9 +10,9 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2iL9lWBpWSxSBWLPPzJpV1qmsig" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -22,13 +22,14 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/daniyari/Documentos/repos/Mooc-Java/mooc-java-programming-ii/part13-Part13_05.TextStatistics",
+    "last_opened_file_path": "/home/daniyari/Documentos/repos/Mooc-Java/mooc-java-programming-ii/part13-Part13_06.Notifier",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -48,6 +49,9 @@
       <option name="presentableId" value="Default" />
       <updated>1719259141920</updated>
       <workItem from="1719259142952" duration="1758000" />
+      <workItem from="1719274208048" duration="396000" />
+      <workItem from="1719274749530" duration="964000" />
+      <workItem from="1719316909881" duration="103000" />
     </task>
     <servers />
   </component>
