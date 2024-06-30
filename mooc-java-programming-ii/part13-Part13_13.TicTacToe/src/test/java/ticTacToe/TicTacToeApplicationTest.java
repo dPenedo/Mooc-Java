@@ -49,9 +49,11 @@ public class TicTacToeApplicationTest extends ApplicationTest {
         }
 
         try {
-            Reflex.reflect(TicTacToeApplication.class).method("start").returningVoid().taking(Stage.class).invokeOn(application, stage);
+            Reflex.reflect(TicTacToeApplication.class).method("start").returningVoid().taking(Stage.class)
+                    .invokeOn(application, stage);
         } catch (Throwable ex) {
-            fail("Make sure that the class TicTacToeApplication has the method start that receives a Stage object as a parameter. If this is the case, make sure that the method works as inteded. The error: " + ex.getMessage());
+            fail("Make sure that the class TicTacToeApplication has the method start that receives a Stage object as a parameter. If this is the case, make sure that the method works as inteded. The error: "
+                    + ex.getMessage());
         }
 
         this.stage = stage;
@@ -61,9 +63,13 @@ public class TicTacToeApplicationTest extends ApplicationTest {
     @Points("13-13.1")
     public void componentsInPlace() {
         Scene scene = stage.getScene();
-        assertNotNull("Stage object should have a Scene object. Now after executing the start method, the getScene call of the stage returned the null reference.", scene);
+        assertNotNull(
+                "Stage object should have a Scene object. Now after executing the start method, the getScene call of the stage returned the null reference.",
+                scene);
         Parent rootElement = scene.getRoot();
-        assertNotNull("Scene object should receive an object meant for the layout of the components (BorderPane, in this case). Now the Scene object had no objects that hold components.", rootElement);
+        assertNotNull(
+                "Scene object should receive an object meant for the layout of the components (BorderPane, in this case). Now the Scene object had no objects that hold components.",
+                rootElement);
 
         BorderPane layout = null;
         try {
@@ -72,9 +78,13 @@ public class TicTacToeApplicationTest extends ApplicationTest {
             fail("Make sure you are using the BorderPane class as the layout for the UI components.");
         }
 
-        assertNotNull("Scene obect must receive as a parameter a BorderPane object meant for the layout of the UI components.", layout);
-        assertTrue("The top of the BorderPane should contain a Label object. Now it contained: " + layout.getTop(), layout.getTop().getClass().isAssignableFrom(Label.class));
-        assertTrue("The center of the Borderpane should contain a GridPane object. Now it contained: " + layout.getCenter(), layout.getCenter().getClass().isAssignableFrom(GridPane.class));
+        assertNotNull(
+                "Scene obect must receive as a parameter a BorderPane object meant for the layout of the UI components.",
+                layout);
+        assertTrue("The top of the BorderPane should contain a Label object. Now it contained: " + layout.getTop(),
+                layout.getTop().getClass().isAssignableFrom(Label.class));
+        assertTrue("The center of the Borderpane should contain a GridPane object. Now it contained: "
+                + layout.getCenter(), layout.getCenter().getClass().isAssignableFrom(GridPane.class));
 
         GridPane grid = null;
         try {
@@ -83,15 +93,18 @@ public class TicTacToeApplicationTest extends ApplicationTest {
             fail("Make sure you use the GridPane class at the center of the BorderPane.");
         }
 
-        assertNotNull("Make sure you use the GridPane class at the center of the BorderPane. Now the center contained " + grid, grid);
+        assertNotNull("Make sure you use the GridPane class at the center of the BorderPane. Now the center contained "
+                + grid, grid);
 
-        assertEquals("Expected the GridPane to contain nine buttons. Now the number of elements was: " + grid.getChildren().size(), 9, grid.getChildren().size());
+        assertEquals("Expected the GridPane to contain nine buttons. Now the number of elements was: "
+                + grid.getChildren().size(), 9, grid.getChildren().size());
 
         for (Node node : grid.getChildren()) {
             try {
                 Button button = Button.class.cast(node);
             } catch (Throwable t) {
-                fail("Expected every object of the grid to be a Button. This was not the case. Error: " + t.getMessage());
+                fail("Expected every object of the grid to be a Button. This was not the case. Error: "
+                        + t.getMessage());
             }
         }
 
@@ -117,20 +130,39 @@ public class TicTacToeApplicationTest extends ApplicationTest {
 
     private void checkTurnChange(int first, int second) {
         Label textLabel = textLabel();
-        assertEquals("At the beginning of the game the text label should display \"Turn: X\". Now it contained the text: \"" + textLabel.getText() + "\".", "Turn: X", textLabel.getText());
+        assertEquals(
+                "At the beginning of the game the text label should display \"Turn: X\". Now it contained the text: \""
+                        + textLabel.getText() + "\".",
+                "Turn: X", textLabel.getText());
         List<Button> buttons = buttons();
-        assertTrue("There should be 9 buttons in the game. Now the number of buttons was " + buttons.size(), buttons.size() == 9);
+        assertTrue("There should be 9 buttons in the game. Now the number of buttons was " + buttons.size(),
+                buttons.size() == 9);
 
-        assertTrue("At the beginning of the game the buttons should contain no text. Now the following text could be found: " + buttons.get(first).getText(), buttons.get(first).getText().trim().isEmpty());
+        assertTrue(
+                "At the beginning of the game the buttons should contain no text. Now the following text could be found: "
+                        + buttons.get(first).getText(),
+                buttons.get(first).getText().trim().isEmpty());
         clickOn(buttons.get(first));
-        assertTrue("When the button is clicked and it's the X turn, the text in the button should be X. Not the text in the button was: " + buttons.get(first).getText(), buttons.get(first).getText().trim().equals("X"));
+        assertTrue(
+                "When the button is clicked and it's the X turn, the text in the button should be X. Not the text in the button was: "
+                        + buttons.get(first).getText(),
+                buttons.get(first).getText().trim().equals("X"));
 
         textLabel = textLabel();
-        assertEquals("After X's turn it should then be O's turn. The text label should read \"Turn: O\". Now it contained the text: \"" + textLabel.getText() + "\".", "Turn: O", textLabel.getText());
+        assertEquals(
+                "After X's turn it should then be O's turn. The text label should read \"Turn: O\". Now it contained the text: \""
+                        + textLabel.getText() + "\".",
+                "Turn: O", textLabel.getText());
         clickOn(buttons.get(second));
-        assertTrue("When the button is clicked and it's O's turn, the text contained by the button should becode 0. Now the text became: " + buttons.get(second).getText(), buttons.get(second).getText().trim().equals("O"));
+        assertTrue(
+                "When the button is clicked and it's O's turn, the text contained by the button should becode 0. Now the text became: "
+                        + buttons.get(second).getText(),
+                buttons.get(second).getText().trim().equals("O"));
         textLabel = textLabel();
-        assertEquals("After O's turn has been finished, it should then be X's turn. The text label should read \"Turn: X\". Now it contained the text: \"" + textLabel.getText() + "\".", "Turn: X", textLabel.getText());
+        assertEquals(
+                "After O's turn has been finished, it should then be X's turn. The text label should read \"Turn: X\". Now it contained the text: \""
+                        + textLabel.getText() + "\".",
+                "Turn: X", textLabel.getText());
     }
 
     @Test
@@ -155,15 +187,23 @@ public class TicTacToeApplicationTest extends ApplicationTest {
     @Points("13-13.3")
     public void gameCanBeWonOrLost() {
         Label textLabel = textLabel();
-        assertEquals("At the beginning of the game the text label should display \"Turn: X\". Now it contained the text: \"" + textLabel.getText() + "\".", "Turn: X", textLabel.getText());
+        assertEquals(
+                "At the beginning of the game the text label should display \"Turn: X\". Now it contained the text: \""
+                        + textLabel.getText() + "\".",
+                "Turn: X", textLabel.getText());
         List<Button> buttons = buttons();
-        assertTrue("There should be 9 buttons in the game. Now the number of buttons was " + buttons.size(), buttons.size() == 9);
+        assertTrue("There should be 9 buttons in the game. Now the number of buttons was " + buttons.size(),
+                buttons.size() == 9);
         Collections.shuffle(buttons);
 
         String turn = "X";
         for (int i = 0; i < buttons.size(); i++) {
             clickOn(buttons.get(i));
-            assertTrue("When the button is clicked and it's " + turn + "'s turn, the text contained by the button should become " + turn + ". Now the button contained the text: " + buttons.get(i).getText(), buttons.get(i).getText().trim().equals(turn));
+            assertTrue(
+                    "When the button is clicked and it's " + turn
+                            + "'s turn, the text contained by the button should become " + turn
+                            + ". Now the button contained the text: " + buttons.get(i).getText(),
+                    buttons.get(i).getText().trim().equals(turn));
 
             String previousTurn = turn;
             turn = turn.equals("X") ? "O" : "X";
@@ -173,38 +213,65 @@ public class TicTacToeApplicationTest extends ApplicationTest {
             }
 
             if (i == 8) {
-                fail("When the game has been played to completion, the text label should read \"The end!\". Now the text was \"" + textLabel.getText() + "\".");
+                fail("When the game has been played to completion, the text label should read \"The end!\". Now the text was \""
+                        + textLabel.getText() + "\".");
             }
 
             if (!textLabel.getText().toLowerCase().contains("turn")) {
-                assertEquals("Make sure that the end of the game is signalled with the text \"The end!\". Now the text was \"" + textLabel.getText() + "\".", "The end!", textLabel.getText());
+                assertEquals(
+                        "Make sure that the end of the game is signalled with the text \"The end!\". Now the text was \""
+                                + textLabel.getText() + "\".",
+                        "The end!", textLabel.getText());
             }
 
-            assertEquals("After playing " + previousTurn + "'s turn, it should then be" + turn + "'s turn. Now the text label said: \"" + textLabel.getText() + "\".", "Turn: " + turn, textLabel.getText());
+            assertEquals(
+                    "After playing " + previousTurn + "'s turn, it should then be" + turn
+                            + "'s turn. Now the text label said: \"" + textLabel.getText() + "\".",
+                    "Turn: " + turn, textLabel.getText());
         }
 
         textLabel = textLabel();
         if (!textLabel.getText().equals("The end!")) {
-            fail("After the game ends, the text label should contain the text \"The end!\". Now it contained \"" + textLabel.getText() + "\"");
+            fail("After the game ends, the text label should contain the text \"The end!\". Now it contained \""
+                    + textLabel.getText() + "\"");
         }
     }
 
     private void checkThatSamePositionCannotBePlayedTwice(int place) {
         Label textLabel = textLabel();
-        assertEquals("At the beginning of the game the text label should display \"Turn: X\". Now it contained the text: \"" + textLabel.getText() + "\".", "Turn: X", textLabel.getText());
+        assertEquals(
+                "At the beginning of the game the text label should display \"Turn: X\". Now it contained the text: \""
+                        + textLabel.getText() + "\".",
+                "Turn: X", textLabel.getText());
         List<Button> buttons = buttons();
-        assertTrue("There should be 9 buttons in the game. Now the number of buttons was " + buttons.size(), buttons.size() == 9);
+        assertTrue("There should be 9 buttons in the game. Now the number of buttons was " + buttons.size(),
+                buttons.size() == 9);
 
-        assertTrue("At the beginning of the game the buttons should contain no text. Now the following text could be found: "  + buttons.get(place).getText(), buttons.get(place).getText().trim().isEmpty());
+        assertTrue(
+                "At the beginning of the game the buttons should contain no text. Now the following text could be found: "
+                        + buttons.get(place).getText(),
+                buttons.get(place).getText().trim().isEmpty());
         clickOn(buttons.get(place));
         textLabel = textLabel();
-        assertTrue("When the button is clicked and it's the X turn, the text in the button should be X. Not the text in the button was: "  + buttons.get(place).getText(), buttons.get(place).getText().trim().equals("X"));
+        assertTrue(
+                "When the button is clicked and it's the X turn, the text in the button should be X. Not the text in the button was: "
+                        + buttons.get(place).getText(),
+                buttons.get(place).getText().trim().equals("X"));
 
-        assertEquals("After X's turn it should then be O's turn. The text label should read \"Turn: O\". Now it contained the text: \"" + textLabel.getText() + "\".", "Turn: O", textLabel.getText());
+        assertEquals(
+                "After X's turn it should then be O's turn. The text label should read \"Turn: O\". Now it contained the text: \""
+                        + textLabel.getText() + "\".",
+                "Turn: O", textLabel.getText());
         clickOn(buttons.get(place));
         textLabel = textLabel();
-        assertTrue("When an already chosen button is clicked and it's O's turn, the text in the button should not change, and the turn should still be O's. Now the text became: " + buttons.get(place).getText(), buttons.get(place).getText().trim().equals("X"));
-        assertEquals("When O clicks on an already chosen position, the turn must not change. The text label should still contain the text \"Turn: O\". Now the text it contained was: \"" + textLabel.getText() + "\".", "Turn: O", textLabel.getText());
+        assertTrue(
+                "When an already chosen button is clicked and it's O's turn, the text in the button should not change, and the turn should still be O's. Now the text became: "
+                        + buttons.get(place).getText(),
+                buttons.get(place).getText().trim().equals("X"));
+        assertEquals(
+                "When O clicks on an already chosen position, the turn must not change. The text label should still contain the text \"Turn: O\". Now the text it contained was: \""
+                        + textLabel.getText() + "\".",
+                "Turn: O", textLabel.getText());
 
     }
 
@@ -256,7 +323,8 @@ public class TicTacToeApplicationTest extends ApplicationTest {
         }
 
         GridPane grid = (GridPane) layout.getCenter();
-        assertEquals("Expected the gridPane to contain nine buttons. Now the number of the elements was: " + grid.getChildren().size(), 9, grid.getChildren().size());
+        assertEquals("Expected the gridPane to contain nine buttons. Now the number of the elements was: "
+                + grid.getChildren().size(), 9, grid.getChildren().size());
         List<Button> buttons = new ArrayList<>();
 
         for (Node node : grid.getChildren()) {
@@ -264,7 +332,8 @@ public class TicTacToeApplicationTest extends ApplicationTest {
                 Button button = Button.class.cast(node);
                 buttons.add(button);
             } catch (Throwable t) {
-                fail("Expected every object in the grid to be a Button. Now this was not the case. Error: " + t.getMessage());
+                fail("Expected every object in the grid to be a Button. Now this was not the case. Error: "
+                        + t.getMessage());
             }
         }
 

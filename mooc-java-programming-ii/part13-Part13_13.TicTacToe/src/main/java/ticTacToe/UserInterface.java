@@ -17,11 +17,12 @@ public class UserInterface {
     private Label gameStateTitle;
     private GridPane cube;
     private Button[][] buttons;
-    private boolean xTurn;
-    private boolean gameFinished;
+    private GameLogic gameLogic;
 
     public UserInterface() {
         this.layout = new BorderPane();
+        this.gameLogic = new GameLogic();
+
         // Title
         this.statusBar = new HBox();
         this.resultBar = new HBox();
@@ -29,8 +30,6 @@ public class UserInterface {
         this.gameStateTitle = new Label("");
         turnTitle.setFont(new Font("Sans", 40));
         gameStateTitle.setFont(Font.font("Sans", 30));
-        this.xTurn = true;
-        this.gameFinished = false;
         statusBar.getChildren().add(turnTitle);
         resultBar.getChildren().add(gameStateTitle);
 
@@ -47,19 +46,17 @@ public class UserInterface {
                 Button button = new Button("");
                 button.setMinWidth(100);
                 button.setMinHeight(100);
+                final int finalRow = row;
+                final int finalCol = col;
                 button.setOnMouseClicked((event) -> {
-                    if (button.getText().equals("")) {
-                        if (xTurn) {
-                            button.setText("X");
-                        } else {
-                            button.setText("O");
-                        }
-                        this.toggleTurn();
-                        this.checkGame();
+                    if (gameLogic.makeMove(finalRow, finalCol)) {
+                        button.setText(gameLogic.isXTurn() ? "O" : "X");
+                        updateTurnTitle();
+                        checkGame();
                     }
                 });
                 cube.add(button, col, row);
-                buttons[col][row] = button;
+                buttons[row][col] = button;
             }
         }
         layout.setTop(statusBar);
@@ -67,86 +64,24 @@ public class UserInterface {
         layout.setBottom(resultBar);
     }
 
-    // Lógica
-    // TODO: ver cómo separarla
-    private void toggleTurn() {
-        if (this.xTurn) {
-            this.xTurn = false;
-            turnTitle.setText("Turn: O");
-        } else {
-            this.xTurn = true;
+    private void updateTurnTitle() {
+        if (gameLogic.isXTurn()) {
             turnTitle.setText("Turn: X");
+        } else {
+            turnTitle.setText("Turn: O");
         }
     }
 
     private void checkGame() {
-        boolean finished = true;
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                if (buttons[col][row].getText().equals("")) {
-                    finished = false;
-                }
-            }
-        }
-        if (finished) {
-            this.gameFinished = true;
-        }
-        if (gameFinished) {
-            if (checkWinner().equals("x")) {
-                gameStateTitle.setText("The end, the winner is X!");
-            } else if (checkWinner().equals("o")) {
-                gameStateTitle.setText("The end, the winner is O!");
-
-            } else {
-                gameStateTitle.setText("The end, there is no winner.");
-            }
+        String winner = gameLogic.checkWinner();
+        if (winner != null) {
+            gameStateTitle.setText("The end, the winner is " + winner + "!");
+        } else if (gameLogic.isDraw()) {
+            gameStateTitle.setText("The end, there is no winner.");
         }
     }
 
-    private String checkWinner() {
-        // TODO: lógica para comprobar igualdad
-        String[][] rows = new String[3][3];
-        String[][] cols = new String[3][3];
-        String[][] diags = new String[2][3];
-        // Row winner
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                buttons[col][row].getText();
-            }
-        }
-        return "none";
-    }
-
-    // Getters & setters
     public BorderPane getLayout() {
         return layout;
-    }
-
-    public void setLayout(BorderPane layout) {
-        this.layout = layout;
-    }
-
-    public HBox getStatusBar() {
-        return statusBar;
-    }
-
-    public void setStatusBar(HBox statusBar) {
-        this.statusBar = statusBar;
-    }
-
-    public Label getTurnTitle() {
-        return turnTitle;
-    }
-
-    public void setTurnTitle(Label turnTitle) {
-        this.turnTitle = turnTitle;
-    }
-
-    public GridPane getCube() {
-        return cube;
-    }
-
-    public void setCube(GridPane cube) {
-        this.cube = cube;
     }
 }
