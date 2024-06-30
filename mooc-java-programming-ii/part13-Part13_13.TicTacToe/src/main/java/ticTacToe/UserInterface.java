@@ -5,14 +5,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 
 public class UserInterface {
     private BorderPane layout;
-    private HBox statusBar;
-    private HBox resultBar;
     private Label turnTitle;
     private Label gameStateTitle;
     private GridPane cube;
@@ -24,14 +21,12 @@ public class UserInterface {
         this.gameLogic = new GameLogic();
 
         // Title
-        this.statusBar = new HBox();
-        this.resultBar = new HBox();
         this.turnTitle = new Label("Turn: X");
         this.gameStateTitle = new Label("");
         turnTitle.setFont(new Font("Sans", 40));
         gameStateTitle.setFont(Font.font("Sans", 30));
-        statusBar.getChildren().add(turnTitle);
-        resultBar.getChildren().add(gameStateTitle);
+        layout.setTop(turnTitle);
+        layout.setBottom(gameStateTitle);
 
         // Cube
         this.cube = new GridPane();
@@ -59,9 +54,7 @@ public class UserInterface {
                 buttons[row][col] = button;
             }
         }
-        layout.setTop(statusBar);
         layout.setCenter(cube);
-        layout.setBottom(resultBar);
     }
 
     private void updateTurnTitle() {
@@ -76,6 +69,8 @@ public class UserInterface {
         String winner = gameLogic.checkWinner();
         if (winner != null) {
             gameStateTitle.setText("The end, the winner is " + winner + "!");
+            turnTitle.setText("The end!");
+
         } else if (gameLogic.isDraw()) {
             gameStateTitle.setText("The end, there is no winner.");
         }
