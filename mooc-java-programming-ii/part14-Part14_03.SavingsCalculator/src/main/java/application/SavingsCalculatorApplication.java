@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
@@ -12,56 +13,106 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SavingsCalculatorApplication extends Application {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         launch(SavingsCalculatorApplication.class);
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
+        // Main layout
         BorderPane layout = new BorderPane();
+        layout.setPrefSize(500, 400);
 
-        NumberAxis xAxis = new NumberAxis(0, 110, 5);
-        NumberAxis yAxis = new NumberAxis(0, 30, 5);
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        // Savings control layout
+        BorderPane savingsPane = new BorderPane();
 
-        layout.setCenter(lineChart);
-
-        // Ahorros mensuales
-        BorderPane firstBorderPane = new BorderPane();
-        Label monthlyLabel = new Label("Monthly savings");
         Slider savingsSlider = new Slider(25, 250, 25);
-        // Label savingsSliderLabel = new Label("Money saved of the month savings");
-        Integer valueOfSavingSlider = (int) savingsSlider.getValue();
-        savingsSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            valueOfSavingSlider.intValue();
-        });
-        Label savingsSliderLabel = new Label("Money saved per month: " + valueOfSavingSlider);
-        firstBorderPane.setLeft(monthlyLabel);
-        firstBorderPane.setCenter(savingsSlider);
-        firstBorderPane.setRight(savingsSliderLabel);
+        savingsSlider.setShowTickMarks(true);
+        savingsSlider.setShowTickLabels(true);
+        savingsSlider.setMajorTickUnit(25);
+        savingsSlider.setMinorTickCount(3);
+        savingsSlider.setSnapToTicks(true);
 
-        // Tasa de interés anual
-        BorderPane secondBorderPane = new BorderPane();
-        Label interestLabel = new Label("Yearly interest rate");
+        Label savingsValue = new Label("" + savingsSlider.getValue());
+
+        savingsPane.setLeft(new Label("Monthly savings"));
+        savingsPane.setCenter(savingsSlider);
+        savingsPane.setRight(savingsValue);
+        savingsPane.setPadding(new Insets(10));
+
+        // Interest control layout
+        BorderPane interestPane = new BorderPane();
+
         Slider interestSlider = new Slider(0, 10, 0);
-        Label interestSliderLabel = new Label("Interest rate of the year");
-        secondBorderPane.setLeft(interestLabel);
-        secondBorderPane.setCenter(interestSlider);
-        secondBorderPane.setRight(interestSliderLabel);
+        interestSlider.setShowTickMarks(true);
+        interestSlider.setShowTickLabels(true);
+        interestSlider.setMinorTickCount(4);
 
-        VBox borderPaneContainer = new VBox();
-        borderPaneContainer.setPadding(new Insets(20, 20, 20, 20));
-        borderPaneContainer.setSpacing(10);
+        Label interestValue = new Label("" + interestSlider.getValue());
 
-        borderPaneContainer.getChildren().add(firstBorderPane);
-        borderPaneContainer.getChildren().add(secondBorderPane);
-        layout.setTop(borderPaneContainer);
+        interestPane.setLeft(new Label("Yearly interest rate"));
+        interestPane.setCenter(interestSlider);
+        interestPane.setRight(interestValue);
+        interestPane.setPadding(new Insets(10));
 
-        Scene view = new Scene(layout, 400, 300);
+        // Overall control layout
+        VBox controls = new VBox();
+        controls.getChildren().addAll(savingsPane, interestPane);
 
+        // Chart creation
+        NumberAxis xAxis = new NumberAxis(0, 30, 1);
+        NumberAxis yAxis = new NumberAxis();
+
+        LineChart<Number, Number> chart = new LineChart<>(xAxis, yAxis);
+        chart.setTitle("Savings calculator");
+
+        XYChart.Series savingsSeries = new XYChart.Series();
+        XYChart.Series savingsWithInterestSeries = new XYChart.Series();
+
+        chart.getData().addAll(savingsSeries, savingsWithInterestSeries);
+
+        // Setting up layout
+        layout.setTop(controls);
+        layout.setCenter(chart);
+        layout.setPadding(new Insets(10, 10, 10, 10));
+
+        // Functionality
+        savingsSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            savingsValue.setText("" + newValue.intValue());
+
+            updateSavings(savingsSlider.getValue(), interestSlider.getValue(), savingsSeries,
+                    savingsWithInterestSeries);
+        });
+        interestSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            interestValue.setText("" + newValue.intValue());
+
+            updateSavings(savingsSlider.getValue(), interestSlider.getValue(), savingsSeries,
+                    savingsWithInterestSeries);
+        });
+
+        updateSavings(savingsSlider.getValue(), interestSlider.getValue(), savingsSeries, savingsWithInterestSeries);
+        Scene view = new Scene(layout, 320, 300);
         stage.setScene(view);
         stage.show();
     }
 
+    private void updateSavings(double savings, double interestRate, XYChart.Series savingsSeries,
+            XYChart.Series savingsWithInterestSeries) {
+        savingsSeries.getData().clear();
+        savingsWithInterestSeries.getData().clear();
+
+        savingsSeries.getData().add(new XYChart.Data(0, 0));
+        savingsWithInterestSeries.getData().add(new XYChart.Data(0, 0));
+
+        double savs = 0.0;
+        double intrs = 0.0;
+
+        for (int i = 1; i <= 30; i++) {
+            savs += savings * 12;
+            intrs = (intrs + savings * 12) * (1.0 + interestRate / 100.0);
+
+            savingsSeries.getData().add(new XYChart.Data(i, savs));
+            savingsWithInterestSeries.getData().add(new XYChart.Data(i, intrs));
+        }
+    }
 }
