@@ -21,6 +21,23 @@ public class CollageApplication extends Application {
         // into the new one, pixel by pixel
         Image sourceImage = new Image("file:monalisa.png");
 
+        // ImageView image = new ImageView(firstTarget);
+        // image.setScaleX(0.5);
+        // image.setScaleY(0.5);
+        // ImageView secondImage = new ImageView(secondTarget);
+        // secondImage.setScaleX(0.5);
+        // secondImage.setScaleY(0.5);
+
+        Pane pane = new Pane();
+        pane.getChildren().add(imageGenerator(sourceImage, 0, 0));
+        // pane.getChildren().add(imageGenerator(sourceImage, 2, 2));
+        // pane.getChildren().add(secondImage);
+
+        stage.setScene(new Scene(pane));
+        stage.show();
+    }
+
+    public static ImageView imageGenerator(Image sourceImage, int xCoord, int yCoord) {
         PixelReader imageReader = sourceImage.getPixelReader();
 
         int width = (int) sourceImage.getWidth();
@@ -42,21 +59,16 @@ public class CollageApplication extends Application {
 
                 Color newColor = new Color(red, green, blue, opacity);
 
-                imageWriter.setColor(xCoordinate, yCoordinate, newColor);
+                imageWriter.setColor((int) xCoordinate / 2, yCoordinate / 2, newColor);
 
                 xCoordinate++;
             }
 
             yCoordinate++;
         }
-
         ImageView image = new ImageView(targetImage);
+        return image;
 
-        Pane pane = new Pane();
-        pane.getChildren().add(image);
-
-        stage.setScene(new Scene(pane));
-        stage.show();
     }
 
     public static void main(String[] args) {
