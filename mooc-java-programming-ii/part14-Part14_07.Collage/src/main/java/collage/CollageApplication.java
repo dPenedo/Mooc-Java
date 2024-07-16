@@ -21,17 +21,12 @@ public class CollageApplication extends Application {
         // into the new one, pixel by pixel
         Image sourceImage = new Image("file:monalisa.png");
 
-        // ImageView image = new ImageView(firstTarget);
-        // image.setScaleX(0.5);
-        // image.setScaleY(0.5);
-        // ImageView secondImage = new ImageView(secondTarget);
-        // secondImage.setScaleX(0.5);
-        // secondImage.setScaleY(0.5);
-
         Pane pane = new Pane();
         pane.getChildren().add(imageGenerator(sourceImage, 0, 0));
-        // pane.getChildren().add(imageGenerator(sourceImage, 2, 2));
-        // pane.getChildren().add(secondImage);
+        pane.getChildren().add(imageGenerator(sourceImage, 2, 0));
+        pane.getChildren().add(imageGenerator(sourceImage, 0, 2));
+        pane.getChildren().add(imageGenerator(sourceImage, 2, 2));
+        pane.getChildren().add(imageGenerator(sourceImage, 2, 2));
 
         stage.setScene(new Scene(pane));
         stage.show();
@@ -52,14 +47,25 @@ public class CollageApplication extends Application {
             while (xCoordinate < width) {
 
                 Color color = imageReader.getColor(xCoordinate, yCoordinate);
-                double red = color.getRed();
-                double green = color.getGreen();
-                double blue = color.getBlue();
+                double red = 1.0 - color.getRed();
+                double green =1.0 - color.getGreen();
+                double blue = 1.0 - color.getBlue();
                 double opacity = color.getOpacity();
 
                 Color newColor = new Color(red, green, blue, opacity);
-
-                imageWriter.setColor((int) xCoordinate / 2, yCoordinate / 2, newColor);
+                int startXPoint = 0;
+                int startYPoint = 0;
+                if (xCoord != 0) {
+                    startXPoint = (int) width / xCoord;
+                } else {
+                    startXPoint = 0;
+                }
+                if (yCoord != 0) {
+                    startYPoint = (int) height / yCoord;
+                } else {
+                    startYPoint = 0;
+                }
+                imageWriter.setColor((int) xCoordinate / 2 + startXPoint, yCoordinate / 2 + startYPoint, newColor);
 
                 xCoordinate++;
             }
