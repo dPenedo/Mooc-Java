@@ -23,10 +23,6 @@ public class CollageApplication extends Application {
 
         Pane pane = new Pane();
         pane.getChildren().add(imageGenerator(sourceImage, 0, 0));
-        pane.getChildren().add(imageGenerator(sourceImage, 2, 0));
-        pane.getChildren().add(imageGenerator(sourceImage, 0, 2));
-        pane.getChildren().add(imageGenerator(sourceImage, 2, 2));
-        pane.getChildren().add(imageGenerator(sourceImage, 2, 2));
 
         stage.setScene(new Scene(pane));
         stage.show();
@@ -48,29 +44,20 @@ public class CollageApplication extends Application {
 
                 Color color = imageReader.getColor(xCoordinate, yCoordinate);
                 double red = 1.0 - color.getRed();
-                double green =1.0 - color.getGreen();
+                double green = 1.0 - color.getGreen();
                 double blue = 1.0 - color.getBlue();
                 double opacity = color.getOpacity();
 
                 Color newColor = new Color(red, green, blue, opacity);
-                int startXPoint = 0;
-                int startYPoint = 0;
-                if (xCoord != 0) {
-                    startXPoint = (int) width / xCoord;
-                } else {
-                    startXPoint = 0;
-                }
-                if (yCoord != 0) {
-                    startYPoint = (int) height / yCoord;
-                } else {
-                    startYPoint = 0;
-                }
-                imageWriter.setColor((int) xCoordinate / 2 + startXPoint, yCoordinate / 2 + startYPoint, newColor);
+                imageWriter.setColor((int) xCoordinate / 2, yCoordinate / 2, newColor);
+                imageWriter.setColor((int) xCoordinate / 2 + width / 2, yCoordinate / 2, newColor);
+                imageWriter.setColor((int) xCoordinate / 2, yCoordinate / 2 + height / 2, newColor);
+                imageWriter.setColor((int) xCoordinate / 2 + width / 2, yCoordinate / 2 + height / 2, newColor);
 
-                xCoordinate++;
+                xCoordinate += 2;
             }
 
-            yCoordinate++;
+            yCoordinate += 2;
         }
         ImageView image = new ImageView(targetImage);
         return image;
