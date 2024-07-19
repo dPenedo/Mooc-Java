@@ -7,9 +7,11 @@ import javafx.scene.shape.Shape;
 public abstract class Character {
     private Polygon character;
     private Point2D movement;
+    private boolean alive;
 
     public Character(Polygon polygon, int x, int y) {
         this.character = polygon;
+        this.alive = true;
         this.character.setTranslateX(x);
         this.character.setTranslateY(y);
 
@@ -32,6 +34,19 @@ public abstract class Character {
         this.character.setTranslateX(this.character.getTranslateX() + this.movement.getX());
         this.character.setTranslateY(this.character.getTranslateY() + this.movement.getY());
 
+        if (this.character.getTranslateX() < 0) {
+            this.character.setTranslateX(this.character.getTranslateX() + AsteroidsApplication.WIDTH);
+        }
+        if (this.character.getTranslateX() > AsteroidsApplication.WIDTH) {
+            this.character.setTranslateX(this.character.getTranslateX() % AsteroidsApplication.WIDTH);
+        }
+
+        if (this.character.getTranslateY() < 0) {
+            this.character.setTranslateY(this.character.getTranslateY() + AsteroidsApplication.HEIGHT);
+        }
+        if (this.character.getTranslateY() > AsteroidsApplication.HEIGHT) {
+            this.character.setTranslateX(this.character.getTranslateY() % AsteroidsApplication.HEIGHT);
+        }
     }
 
     public void acceleate() {
@@ -47,6 +62,34 @@ public abstract class Character {
     public boolean collide(Character other) {
         Shape collisonArea = Shape.intersect(this.character, other.getCharacter());
         return collisonArea.getBoundsInLocal().getWidth() != -1;
+    }
+
+    public Point2D getMovement() {
+        return movement;
+    }
+
+    public void setCharacter(Polygon character) {
+        this.character = character;
+    }
+
+    public void setMovement(Point2D movement) {
+        this.movement = movement;
+    }
+
+    public void setAlive(boolean value) {
+        if (value == true) {
+            this.alive = true;
+        } else {
+            this.alive = false;
+        }
+    }
+
+    public boolean isAlive() {
+        if (this.alive) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
