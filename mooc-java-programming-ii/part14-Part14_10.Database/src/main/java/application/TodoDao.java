@@ -21,7 +21,8 @@ public class TodoDao {
         try (Connection connection = createConnectionAndEnsureDatabase();
                 ResultSet results = connection.prepareStatement("SELECT * FROM Todo").executeQuery()) {
             while (results.next()) {
-                todos.add(new Todo(results.getInt("id"), results.getString("name"), results.getString("description"), results.getBoolean("done")));
+                todos.add(new Todo(results.getInt("id"), results.getString("name"), results.getString("description"),
+                        results.getBoolean("done")));
             }
         }
         return todos;
@@ -29,7 +30,8 @@ public class TodoDao {
 
     public void add(Todo todo) throws SQLException {
         try (Connection connection = createConnectionAndEnsureDatabase()) {
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Todo (name, description, done) VALUES (?, ?, ?)");
+            PreparedStatement stmt = connection
+                    .prepareStatement("INSERT INTO Todo (name, description, done) VALUES (?, ?, ?)");
             stmt.setString(1, todo.getName());
             stmt.setString(2, todo.getDescription());
             stmt.setBoolean(3, todo.getDone());
@@ -56,7 +58,9 @@ public class TodoDao {
     private Connection createConnectionAndEnsureDatabase() throws SQLException {
         Connection conn = DriverManager.getConnection(this.databasePath, "sa", "");
         try {
-            conn.prepareStatement("CREATE TABLE Todo (id int auto_increment primary key, name varchar(255), description varchar(10000), done boolean)").execute();
+            conn.prepareStatement(
+                    "CREATE TABLE Todo (id int auto_increment primary key, name varchar(255), description varchar(10000), done boolean)")
+                    .execute();
         } catch (SQLException t) {
         }
 

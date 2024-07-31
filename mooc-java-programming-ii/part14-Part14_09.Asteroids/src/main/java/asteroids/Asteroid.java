@@ -14,7 +14,7 @@ public class Asteroid extends Character {
 
         int accelerationAmount = 1 + random.nextInt(10);
         for (int i = 0; i < accelerationAmount; i++) {
-            acceleate();
+            accelerate();
         }
 
         this.rotationalMovement = 0.5 - random.nextDouble();

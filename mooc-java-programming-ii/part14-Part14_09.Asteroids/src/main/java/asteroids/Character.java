@@ -49,7 +49,7 @@ public abstract class Character {
         }
     }
 
-    public void acceleate() {
+    public void accelerate() {
         double changeX = Math.cos(Math.toRadians(this.character.getRotate()));
         double changeY = Math.sin(Math.toRadians(this.character.getRotate()));
 
@@ -77,19 +77,11 @@ public abstract class Character {
     }
 
     public void setAlive(boolean value) {
-        if (value == true) {
-            this.alive = true;
-        } else {
-            this.alive = false;
-        }
+        this.alive = value;
     }
 
     public boolean isAlive() {
-        if (this.alive) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.alive;
     }
 
 }
