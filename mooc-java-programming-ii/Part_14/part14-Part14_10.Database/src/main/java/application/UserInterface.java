@@ -28,7 +28,9 @@ public class UserInterface {
             String command = this.scanner.nextLine();
             // List
             if (command.equals("1")) {
+                System.out.println("-------------------------");
                 System.out.println("Listing the database contents");
+                // TODO: insertar salto de linea entre items
                 System.out.println(database.list());
             }
             // Add

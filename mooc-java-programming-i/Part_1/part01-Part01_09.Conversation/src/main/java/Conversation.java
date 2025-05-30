@@ -11,6 +11,5 @@ public class Conversation {
         System.out.println("Oh, how interesting. Tell me more!");
         String more = scanner.nextLine();
         System.out.println("Thanks for sharing!");
-
     }
 }
